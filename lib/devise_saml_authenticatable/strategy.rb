@@ -8,10 +8,10 @@ module Devise
         if params[:SAMLResponse]
           OneLogin::RubySaml::Response.new(
             params[:SAMLResponse],
-            {
-              allowed_clock_drift: Devise.allowed_clock_drift_in_seconds,
-              skip_recipient_check: true
-            }
+            allowed_clock_drift: Devise.allowed_clock_drift_in_seconds,
+            skip_recipient_check: Devise.saml_skip_recipient_check,
+            skip_subject_confirmation: Devise.saml_skip_subject_confirmation,
+            skip_conditions: Devise.saml_skip_conditions
           )
         else
           false
@@ -40,6 +40,9 @@ module Devise
           params[:SAMLResponse],
           settings: saml_config(get_idp_entity_id(params)),
           allowed_clock_drift: Devise.allowed_clock_drift_in_seconds,
+          skip_recipient_check: Devise.saml_skip_recipient_check,
+          skip_subject_confirmation: Devise.saml_skip_subject_confirmation,
+          skip_conditions: Devise.saml_skip_conditions        
         )
         unless @response.is_valid?
           failed_auth("Auth errors: #{@response.errors.join(', ')}")
