@@ -71,6 +71,18 @@ module Devise
   mattr_accessor :allowed_clock_drift_in_seconds
   @@allowed_clock_drift_in_seconds
 
+  # To skip validation
+  mattr_accessor :saml_skip_recipient_check
+  @@saml_skip_recipient_check
+
+  # To skip validation
+  mattr_accessor :saml_skip_subject_confirmation
+  @@saml_skip_subject_confirmation
+
+  # To skip validation
+  mattr_accessor :saml_skip_conditions
+  @@saml_skip_conditions
+
   mattr_accessor :saml_config
   @@saml_config = OneLogin::RubySaml::Settings.new
   def self.saml_configure
