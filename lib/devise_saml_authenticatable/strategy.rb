@@ -8,7 +8,10 @@ module Devise
         if params[:SAMLResponse]
           OneLogin::RubySaml::Response.new(
             params[:SAMLResponse],
-            allowed_clock_drift: Devise.allowed_clock_drift_in_seconds,
+            {
+              allowed_clock_drift: Devise.allowed_clock_drift_in_seconds,
+              skip_recipient_check: true
+            }
           )
         else
           false
